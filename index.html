@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Art Society 藝術協會 - 官方計分與排名系統</title>
+  <title>Art Society 藝術協會 - 計分與排名系統</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,29 +11,18 @@
   <style>
     body {
       font-family: 'Noto Serif TC', serif;
-      background-color: #1a1615;
+      background-color: #171412;
       color: #2b231d;
     }
     .font-cinzel {
       font-family: 'Cinzel', serif;
     }
     .paper-texture {
-      background-color: #fcf9f2;
-      background-image: radial-gradient(#d6cbb8 0.75px, transparent 0.75px), radial-gradient(#d6cbb8 0.75px, #fcf9f2 0.75px);
-      background-size: 30px 30px;
-      background-position: 0 0, 15px 15px;
+      background-color: #f7f2e7;
     }
     .ornate-border {
       border: 2px solid #b89758;
-      box-shadow: 0 0 0 4px #2a2015, 0 10px 25px -5px rgba(0,0,0,0.5);
-    }
-    .gold-gradient {
-      background: linear-gradient(135deg, #d4af37 0%, #aa8222 50%, #f3e5ab 100%);
-    }
-    .gold-text {
-      background: linear-gradient(135deg, #f5d77f, #dfb755, #fcedb9);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
     }
     input[type=number]::-webkit-inner-spin-button, 
     input[type=number]::-webkit-outer-spin-button { 
@@ -47,37 +36,32 @@
 </head>
 <body class="min-h-screen text-[#2e261f] pb-16">
 
-  <!-- Header Section -->
-  <header class="bg-[#241a15] text-[#f7e8ce] py-8 border-b-4 border-[#b89758] shadow-2xl relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
-    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-      <div class="inline-block px-4 py-1 border border-[#b89758]/60 text-xs tracking-widest uppercase mb-2 text-[#d4af37]">
+  <!-- Header Section (Solid Colors only) -->
+  <header class="bg-[#241a15] text-[#f7e8ce] py-7 border-b-4 border-[#b89758] shadow-lg">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <div class="inline-block px-3 py-0.5 border border-[#b89758] text-xs tracking-widest uppercase mb-2 text-[#d4af37] font-semibold">
         Board Game Companion • 桌面遊戲專用計分儀
       </div>
-      <h1 class="text-3xl md:text-5xl font-cinzel font-extrabold tracking-wider gold-text uppercase drop-shadow-md">
+      <h1 class="text-3xl md:text-5xl font-cinzel font-black tracking-wider text-[#f5d77f] uppercase">
         Art Society 藝術協會
       </h1>
-      <p class="text-sm md:text-base text-[#c9b79c] mt-2 italic">
-        沙龍畫作鑑賞 • 聲望結算與排名計分表
-      </p>
     </div>
   </header>
 
   <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
     
-    <!-- Step 1: Global Setup & Market Fashion Board -->
-    <section class="paper-texture ornate-border rounded-xl p-5 md:p-8">
-      <div class="flex flex-wrap items-center justify-between border-b-2 border-[#b89758]/40 pb-4 mb-6 gap-4">
+    <!-- Step 1: Market Fashion Board -->
+    <section class="paper-texture ornate-border rounded-xl p-5 md:p-7">
+      <div class="flex flex-wrap items-center justify-between border-b-2 border-[#b89758]/50 pb-4 mb-5 gap-4">
         <div>
-          <span class="text-xs font-bold text-[#8c6721] uppercase tracking-wider block font-cinzel">Stage I</span>
           <h2 class="text-xl md:text-2xl font-bold text-[#3a2013] flex items-center gap-2">
             🏛️ 國家美術館流行榜 (聲望倍率)
           </h2>
         </div>
 
         <!-- Players Count Selector -->
-        <div class="flex items-center gap-2 bg-[#ecdcb9]/60 px-4 py-2 rounded-lg border border-[#b89758]/50">
-          <label class="text-sm font-semibold text-[#4a3424]">參賽玩家人數：</label>
+        <div class="flex items-center gap-2 bg-[#ebdcb9] px-4 py-2 rounded-lg border border-[#b89758]">
+          <label class="text-sm font-bold text-[#4a3424]">參賽玩家人數：</label>
           <div class="flex gap-1">
             <button onclick="setPlayerCount(2)" id="btn-p2" class="w-8 h-8 rounded font-cinzel font-bold text-sm transition">2</button>
             <button onclick="setPlayerCount(3)" id="btn-p3" class="w-8 h-8 rounded font-cinzel font-bold text-sm transition">3</button>
@@ -86,58 +70,12 @@
         </div>
       </div>
 
-      <p class="text-xs text-[#6e5842] mb-4">
+      <p class="text-xs text-[#6e5842] mb-4 font-semibold">
         請指定遊戲結束時四大藝術流派在流行榜上的最終順位（分別為 ×5、×4、×3、×2 倍率，系統會自動校驗不重複）：
       </p>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
-        <!-- 5x Vogue -->
-        <div class="bg-gradient-to-b from-[#f3e3be] to-[#eed29d] p-3 rounded-lg border-2 border-[#b89758] shadow-sm text-center">
-          <span class="inline-block px-2 py-0.5 bg-[#8b261e] text-white text-xs font-bold rounded mb-1">最熱門 ×5</span>
-          <div class="text-xs font-semibold text-[#573919] mb-1">In Vogue</div>
-          <select id="market-5" onchange="handleMarketChange(5)" class="w-full bg-[#fdfaf3] border border-[#a27f3b] text-sm rounded p-1.5 font-bold text-[#3d2716] text-center focus:ring-2 focus:ring-[#b89758] outline-none">
-            <option value="portrait" selected>肖像 (Portrait)</option>
-            <option value="landscape">風景 (Landscape)</option>
-            <option value="still_life">靜物 (Still Life)</option>
-            <option value="cityscape">城市歷史 (City)</option>
-          </select>
-        </div>
-
-        <!-- 4x Popular -->
-        <div class="bg-gradient-to-b from-[#f8ecd5] to-[#eddcb7] p-3 rounded-lg border border-[#b89758] shadow-sm text-center">
-          <span class="inline-block px-2 py-0.5 bg-[#ad6824] text-white text-xs font-bold rounded mb-1">受歡迎 ×4</span>
-          <div class="text-xs font-semibold text-[#573919] mb-1">Popular</div>
-          <select id="market-4" onchange="handleMarketChange(4)" class="w-full bg-[#fdfaf3] border border-[#a27f3b] text-sm rounded p-1.5 font-bold text-[#3d2716] text-center focus:ring-2 focus:ring-[#b89758] outline-none">
-            <option value="portrait">肖像 (Portrait)</option>
-            <option value="landscape" selected>風景 (Landscape)</option>
-            <option value="still_life">靜物 (Still Life)</option>
-            <option value="cityscape">城市歷史 (City)</option>
-          </select>
-        </div>
-
-        <!-- 3x Admired -->
-        <div class="bg-gradient-to-b from-[#fbf4e6] to-[#f4e7cd] p-3 rounded-lg border border-[#b89758]/80 shadow-sm text-center">
-          <span class="inline-block px-2 py-0.5 bg-[#526f43] text-white text-xs font-bold rounded mb-1">讚賞 ×3</span>
-          <div class="text-xs font-semibold text-[#573919] mb-1">Admired</div>
-          <select id="market-3" onchange="handleMarketChange(3)" class="w-full bg-[#fdfaf3] border border-[#a27f3b] text-sm rounded p-1.5 font-bold text-[#3d2716] text-center focus:ring-2 focus:ring-[#b89758] outline-none">
-            <option value="portrait">肖像 (Portrait)</option>
-            <option value="landscape">風景 (Landscape)</option>
-            <option value="still_life" selected>靜物 (Still Life)</option>
-            <option value="cityscape">城市歷史 (City)</option>
-          </select>
-        </div>
-
-        <!-- 2x Recognized -->
-        <div class="bg-gradient-to-b from-[#fdfbf6] to-[#f8f0dd] p-3 rounded-lg border border-[#b89758]/60 shadow-sm text-center">
-          <span class="inline-block px-2 py-0.5 bg-[#4f5c6b] text-white text-xs font-bold rounded mb-1">公認 ×2</span>
-          <div class="text-xs font-semibold text-[#573919] mb-1">Recognized</div>
-          <select id="market-2" onchange="handleMarketChange(2)" class="w-full bg-[#fdfaf3] border border-[#a27f3b] text-sm rounded p-1.5 font-bold text-[#3d2716] text-center focus:ring-2 focus:ring-[#b89758] outline-none">
-            <option value="portrait">肖像 (Portrait)</option>
-            <option value="landscape">風景 (Landscape)</option>
-            <option value="still_life">靜物 (Still Life)</option>
-            <option value="cityscape" selected>城市歷史 (City)</option>
-          </select>
-        </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4" id="market-cards-container">
+        <!-- Rendered dynamically with solid category colors -->
       </div>
     </section>
 
@@ -147,7 +85,7 @@
         <h2 class="text-xl md:text-2xl font-cinzel font-bold text-[#eddcb7] flex items-center gap-2">
           <span>🎨</span> 玩家畫廊佈置與結算數據
         </h2>
-        <span class="text-xs text-[#b89758] italic">* 填妥後下方即時計算排行榜</span>
+        <span class="text-xs text-[#b89758] italic font-semibold">* 填妥後即時計算各區小計與總排行榜</span>
       </div>
 
       <div id="players-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -156,26 +94,25 @@
     </section>
 
     <!-- Step 3: Leaderboard & Detailed Breakdown -->
-    <section class="paper-texture ornate-border rounded-xl p-5 md:p-8">
-      <div class="flex flex-wrap items-center justify-between border-b-2 border-[#b89758]/40 pb-4 mb-6 gap-3">
+    <section class="paper-texture ornate-border rounded-xl p-5 md:p-7">
+      <div class="flex flex-wrap items-center justify-between border-b-2 border-[#b89758]/50 pb-4 mb-6 gap-3">
         <div>
-          <span class="text-xs font-bold text-[#8c6721] uppercase tracking-wider block font-cinzel">Final Results</span>
           <h2 class="text-2xl font-bold text-[#3a2013] flex items-center gap-2">
             🏆 沙龍最終聲望排名榜
           </h2>
         </div>
         <div class="flex gap-2">
-          <button onclick="copyResultsSummary()" class="px-3 py-1.5 bg-[#3a2618] hover:bg-[#523722] text-[#f7e8ce] text-xs font-bold rounded border border-[#b89758] transition flex items-center gap-1">
+          <button onclick="copyResultsSummary()" class="px-3 py-1.5 bg-[#3a2618] hover:bg-[#523722] text-[#f7e8ce] text-xs font-bold rounded border border-[#b89758] transition flex items-center gap-1 shadow-sm">
             📋 複製計分結果
           </button>
-          <button onclick="resetAllScores()" class="px-3 py-1.5 bg-[#8b261e] hover:bg-[#6e1a14] text-white text-xs font-bold rounded transition">
+          <button onclick="resetAllScores()" class="px-3 py-1.5 bg-[#991b1b] hover:bg-[#7f1d1d] text-white text-xs font-bold rounded transition shadow-sm">
             🔄 重設所有分數
           </button>
         </div>
       </div>
 
       <!-- Live Leaderboard Cards -->
-      <div id="leaderboard-cards" class="space-y-4 mb-8">
+      <div id="leaderboard-cards" class="space-y-3 mb-8">
         <!-- Rendered dynamically -->
       </div>
 
@@ -184,9 +121,9 @@
         <h3 class="text-sm font-bold text-[#553b24] mb-3 uppercase tracking-wider font-cinzel flex items-center gap-1">
           <span>📜</span> 全項目詳細加扣分明細表 (Audit Breakdown)
         </h3>
-        <table class="w-full text-left border-collapse text-xs md:text-sm">
+        <table class="w-full text-left border-collapse text-xs md:text-sm bg-white rounded-lg overflow-hidden border border-[#d8c7a5]">
           <thead>
-            <tr class="bg-[#e8d7b7] text-[#3d2716] border-b-2 border-[#b89758]">
+            <tr class="bg-[#ebd9b8] text-[#3d2716] border-b border-[#b89758]">
               <th class="p-2.5 font-bold">排名 / 玩家</th>
               <th class="p-2.5">畫作聲望分 (4類)</th>
               <th class="p-2.5">視線水平 (+3/幅)</th>
@@ -198,53 +135,87 @@
               <th class="p-2.5 font-bold text-right text-sm">最終總分</th>
             </tr>
           </thead>
-          <tbody id="breakdown-table-body" class="divide-y divide-[#dfcfb0]">
+          <tbody id="breakdown-table-body" class="divide-y divide-[#ebd9b8]">
             <!-- Table rows rendered dynamically -->
           </tbody>
         </table>
       </div>
 
       <!-- Rules Quick Cheatsheet -->
-      <div class="mt-8 p-4 bg-[#f0e3cc]/70 border border-[#b89758]/60 rounded-lg text-xs text-[#5c442c] space-y-1.5">
+      <div class="mt-8 p-4 bg-[#ede2ce] border border-[#b89758] rounded-lg text-xs text-[#5c442c] space-y-1.5">
         <div class="font-bold text-[#3d2716] text-sm mb-1">📖 官方計分重要提醒：</div>
         <div>• <strong>失禮畫作（Faux Pas）</strong>：相鄰畫框裝飾相同而違規的畫作不計入有效數量，輸入前請先扣除。</div>
         <div>• <strong>視線獎勵（Eyeline）</strong>：只有目前市場流行榜 <strong>最熱門（×5）</strong> 的畫作，且只要有任一部份處於牆面視線水平帶（Eyeline strip）內，每幅額外 +3 分。</div>
-        <div>• <strong>平手判定（Tie-breaker）</strong>：若總分相同，以剩餘在手中的<strong>競標出價牌點數總和</strong>較高者勝出。</div>
+        <div>• <strong>平手判定（Tie-breaker）</strong>：只有當總分出現平手時才會解鎖「剩餘出價手牌點數」欄位，點數較高者勝出。</div>
       </div>
     </section>
 
   </main>
 
   <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-6 right-6 bg-[#2c1d13] text-[#f7e8ce] border-2 border-[#b89758] px-4 py-2.5 rounded-lg shadow-2xl text-xs md:text-sm font-semibold opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+  <div id="toast" class="fixed bottom-6 right-6 bg-[#241a15] text-[#f7e8ce] border-2 border-[#b89758] px-4 py-2.5 rounded-lg shadow-xl text-xs md:text-sm font-semibold opacity-0 transition-opacity duration-300 pointer-events-none z-50">
     已成功複製計分結果！
   </div>
 
   <script>
-    // State
-    let playerCount = 4;
-    const paintingTypes = [
-      { id: 'portrait', name: '肖像', color: '#883025' },
-      { id: 'landscape', name: '風景', color: '#386641' },
-      { id: 'still_life', name: '靜物', color: '#9d6b24' },
-      { id: 'cityscape', name: '城市歷史', color: '#315678' }
-    ];
-
-    let marketRank = {
-      5: 'portrait',
-      4: 'landscape',
-      3: 'still_life',
-      2: 'cityscape'
+    // Four Categories Config with Strict Solid Colors
+    const CATEGORIES = {
+      cityscape: {
+        id: 'cityscape',
+        name: '城市',
+        en: 'City',
+        color: '#1d4ed8',        // Blue solid
+        bgColor: '#dbeafe',      // Light Blue solid
+        borderColor: '#93c5fd',
+        textColor: '#1e40af'
+      },
+      portrait: {
+        id: 'portrait',
+        name: '肖像',
+        en: 'Portrait',
+        color: '#b91c1c',        // Red solid
+        bgColor: '#fee2e2',      // Light Red solid
+        borderColor: '#fca5a5',
+        textColor: '#991b1b'
+      },
+      still_life: {
+        id: 'still_life',
+        name: '靜物',
+        en: 'Still Life',
+        color: '#b45309',        // Yellow/Amber solid
+        bgColor: '#fef3c7',      // Light Amber solid
+        borderColor: '#fcd34d',
+        textColor: '#92400e'
+      },
+      landscape: {
+        id: 'landscape',
+        name: '風景',
+        en: 'Landscape',
+        color: '#15803d',        // Green solid
+        bgColor: '#dcfce7',      // Light Green solid
+        borderColor: '#86efac',
+        textColor: '#166534'
+      }
     };
 
+    let playerCount = 4;
+
+    // Default market rank
+    let marketRank = {
+      5: 'cityscape',
+      4: 'portrait',
+      3: 'still_life',
+      2: 'landscape'
+    };
+
+    // Initialize all values to 0
     let players = [
-      { id: 1, name: '玩家 1 (愛德華)', portrait: 3, landscape: 2, still_life: 2, cityscape: 1, eyelineCount: 2, decorPoints: 4, fullGallery: false, emptyCorners: 1, excessPaintings: 0, tieBreakerHand: 12 },
-      { id: 2, name: '玩家 2 (維多利亞)', portrait: 2, landscape: 3, still_life: 1, cityscape: 2, eyelineCount: 1, decorPoints: 6, fullGallery: true, emptyCorners: 0, excessPaintings: 1, tieBreakerHand: 8 },
-      { id: 3, name: '玩家 3 (亞瑟)', portrait: 1, landscape: 2, still_life: 4, cityscape: 1, eyelineCount: 0, decorPoints: 3, fullGallery: false, emptyCorners: 2, excessPaintings: 0, tieBreakerHand: 15 },
-      { id: 4, name: '玩家 4 (貝翠絲)', portrait: 2, landscape: 1, still_life: 2, cityscape: 3, eyelineCount: 1, decorPoints: 5, fullGallery: false, emptyCorners: 0, excessPaintings: 0, tieBreakerHand: 9 }
+      { id: 1, cityscape: 0, portrait: 0, still_life: 0, landscape: 0, eyelineCount: 0, decorPoints: 0, fullGallery: false, emptyCorners: 0, excessPaintings: 0, tieBreakerHand: 0 },
+      { id: 2, cityscape: 0, portrait: 0, still_life: 0, landscape: 0, eyelineCount: 0, decorPoints: 0, fullGallery: false, emptyCorners: 0, excessPaintings: 0, tieBreakerHand: 0 },
+      { id: 3, cityscape: 0, portrait: 0, still_life: 0, landscape: 0, eyelineCount: 0, decorPoints: 0, fullGallery: false, emptyCorners: 0, excessPaintings: 0, tieBreakerHand: 0 },
+      { id: 4, cityscape: 0, portrait: 0, still_life: 0, landscape: 0, eyelineCount: 0, decorPoints: 0, fullGallery: false, emptyCorners: 0, excessPaintings: 0, tieBreakerHand: 0 }
     ];
 
-    // Helper to get multiplier of a painting type
     function getMultiplier(typeId) {
       for (const [mult, id] of Object.entries(marketRank)) {
         if (id === typeId) return parseInt(mult);
@@ -252,18 +223,55 @@
       return 2;
     }
 
-    // Market change handler with duplicate resolution
     function handleMarketChange(changedMult) {
-      const selectedValue = document.getElementById(`market-${changedMult}`).value;
+      const selectEl = document.getElementById(`market-${changedMult}`);
+      const selectedValue = selectEl.value;
       const oldMult = getMultiplier(selectedValue);
       
       if (oldMult !== changedMult) {
         const displacedValue = marketRank[changedMult];
         marketRank[oldMult] = displacedValue;
-        document.getElementById(`market-${oldMult}`).value = displacedValue;
       }
       marketRank[changedMult] = selectedValue;
-      renderAll();
+      renderMarketBoard();
+      renderPlayers();
+      calculateAndRender();
+    }
+
+    function renderMarketBoard() {
+      const container = document.getElementById('market-cards-container');
+      container.innerHTML = '';
+
+      const multipliers = [
+        { mult: 5, label: '最熱門 ×5', sub: 'In Vogue' },
+        { mult: 4, label: '受歡迎 ×4', sub: 'Popular' },
+        { mult: 3, label: '讚賞 ×3', sub: 'Admired' },
+        { mult: 2, label: '公認 ×2', sub: 'Recognized' }
+      ];
+
+      multipliers.forEach(m => {
+        const currentCat = CATEGORIES[marketRank[m.mult]];
+        const card = document.createElement('div');
+        card.className = 'p-3 rounded-lg border-2 shadow-sm text-center transition-colors';
+        card.style.backgroundColor = currentCat.bgColor;
+        card.style.borderColor = currentCat.color;
+
+        card.innerHTML = `
+          <span class="inline-block px-2.5 py-0.5 text-white text-xs font-bold rounded mb-1" style="background-color: ${currentCat.color}">
+            ${m.label}
+          </span>
+          <div class="text-xs font-semibold mb-1" style="color: ${currentCat.textColor}">${m.sub}</div>
+          <select id="market-${m.mult}" onchange="handleMarketChange(${m.mult})" 
+            class="w-full bg-white border text-sm rounded p-1.5 font-bold text-center focus:ring-2 outline-none"
+            style="border-color: ${currentCat.color}; color: ${currentCat.textColor}">
+            <option value="cityscape" ${marketRank[m.mult] === 'cityscape' ? 'selected' : ''}>城市 (City - 藍)</option>
+            <option value="portrait" ${marketRank[m.mult] === 'portrait' ? 'selected' : ''}>肖像 (Portrait - 紅)</option>
+            <option value="still_life" ${marketRank[m.mult] === 'still_life' ? 'selected' : ''}>靜物 (Still Life - 黃)</option>
+            <option value="landscape" ${marketRank[m.mult] === 'landscape' ? 'selected' : ''}>風景 (Landscape - 綠)</option>
+          </select>
+        `;
+        container.appendChild(card);
+      });
     }
 
     function setPlayerCount(count) {
@@ -273,14 +281,13 @@
         if (n === count) {
           btn.className = 'w-8 h-8 rounded font-cinzel font-bold text-sm bg-[#3d2716] text-[#e8d7b7] shadow-inner';
         } else {
-          btn.className = 'w-8 h-8 rounded font-cinzel font-bold text-sm bg-white/70 hover:bg-white text-[#5c442c]';
+          btn.className = 'w-8 h-8 rounded font-cinzel font-bold text-sm bg-white hover:bg-[#faebd7] text-[#5c442c] border border-[#b89758]/40';
         }
       });
       renderPlayers();
       calculateAndRender();
     }
 
-    // Number adjustment stepper
     function stepValue(playerId, field, delta, min = 0, max = 99) {
       const p = players.find(x => x.id === playerId);
       if (!p) return;
@@ -306,12 +313,30 @@
       calculateAndRender();
     }
 
-    function updatePlayerName(playerId, name) {
-      const p = players.find(x => x.id === playerId);
-      if (p) {
-        p.name = name.trim() || `玩家 ${playerId}`;
-        calculateAndRender();
-      }
+    // Check if any active player has tied final scores
+    function checkHasTies() {
+      const activePlayers = players.slice(0, playerCount);
+      const scores = activePlayers.map(p => {
+        const pScore = (p.cityscape || 0) * getMultiplier('cityscape') +
+                       (p.portrait || 0) * getMultiplier('portrait') +
+                       (p.still_life || 0) * getMultiplier('still_life') +
+                       (p.landscape || 0) * getMultiplier('landscape');
+        const eye = (p.eyelineCount || 0) * 3;
+        const dec = p.decorPoints || 0;
+        const full = p.fullGallery ? 5 : 0;
+        const pen = ((p.emptyCorners || 0) * 2) + ((p.excessPaintings || 0) * 2);
+        return { id: p.id, finalScore: pScore + eye + dec + full - pen };
+      });
+
+      const scoreCounts = {};
+      scores.forEach(s => {
+        scoreCounts[s.finalScore] = (scoreCounts[s.finalScore] || 0) + 1;
+      });
+
+      const tiedScoreValues = Object.keys(scoreCounts).filter(k => scoreCounts[k] > 1).map(Number);
+      const tiedPlayerIds = scores.filter(s => tiedScoreValues.includes(s.finalScore)).map(s => s.id);
+
+      return { hasTies: tiedPlayerIds.length > 0, tiedPlayerIds };
     }
 
     function renderPlayers() {
@@ -321,123 +346,176 @@
       for (let i = 0; i < playerCount; i++) {
         const p = players[i];
         const card = document.createElement('div');
-        card.className = 'paper-texture ornate-border rounded-xl p-5 shadow-lg relative flex flex-col justify-between';
+        card.className = 'paper-texture ornate-border rounded-xl p-5 shadow-md flex flex-col justify-between';
         
         card.innerHTML = `
           <div>
-            <!-- Header: Player Name -->
-            <div class="flex items-center justify-between border-b border-[#b89758]/50 pb-3 mb-4">
-              <input type="text" value="${p.name}" onchange="updatePlayerName(${p.id}, this.value)" 
-                class="bg-transparent font-bold text-lg md:text-xl text-[#342013] border-b border-transparent hover:border-[#b89758] focus:border-[#8b261e] focus:bg-white/60 px-1 py-0.5 rounded outline-none transition w-3/4">
-              <span class="text-xs font-cinzel font-bold px-2 py-0.5 rounded bg-[#ebd7b2] text-[#553b24] border border-[#b89758]/40">P${p.id}</span>
+            <!-- Header: Player ID -->
+            <div class="flex items-center justify-between border-b-2 border-[#b89758]/40 pb-2 mb-4">
+              <h3 class="font-cinzel font-black text-xl text-[#3d2716] flex items-center gap-2">
+                <span class="w-3 h-3 bg-[#b89758] rounded-full inline-block"></span>
+                玩家 ${p.id}
+              </h3>
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-[#ebd7b2] text-[#553b24] border border-[#b89758]/50">
+                Player ${p.id}
+              </span>
             </div>
 
-            <!-- Paintings counts -->
-            <div class="mb-4">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-xs font-bold text-[#6d4e2a] uppercase tracking-wide">有效畫作數量 (已扣除失禮失誤)</span>
-                <span class="text-[11px] text-[#8c6721] italic">依市場即時倍率計分</span>
+            <!-- SECTION 1: Paintings counts -->
+            <div class="mb-5 bg-white/70 p-3 rounded-lg border border-[#cfbe9e]">
+              <div class="flex justify-between items-center mb-2 pb-1 border-b border-[#cfbe9e]">
+                <span class="text-xs font-bold text-[#4a3424] uppercase tracking-wide">
+                  🖼️ 有效畫作數量 (已扣除失禮)
+                </span>
+                <span class="text-xs font-bold text-[#1d4ed8]">
+                  畫作小計: <strong id="sec-painting-total-${p.id}" class="text-sm font-black text-[#991b1b]">0</strong> 分
+                </span>
               </div>
-              <div class="grid grid-cols-2 gap-2 text-xs">
-                ${renderCounterItem(p.id, 'portrait', `肖像 (×${getMultiplier('portrait')})`, p.portrait, '#883025')}
-                ${renderCounterItem(p.id, 'landscape', `風景 (×${getMultiplier('landscape')})`, p.landscape, '#386641')}
-                ${renderCounterItem(p.id, 'still_life', `靜物 (×${getMultiplier('still_life')})`, p.still_life, '#9d6b24')}
-                ${renderCounterItem(p.id, 'cityscape', `城市歷史 (×${getMultiplier('cityscape')})`, p.cityscape, '#315678')}
+              <div class="grid grid-cols-2 gap-2.5">
+                ${renderCounterItem(p.id, 'cityscape', `城市 (×${getMultiplier('cityscape')})`, p.cityscape, CATEGORIES.cityscape)}
+                ${renderCounterItem(p.id, 'portrait', `肖像 (×${getMultiplier('portrait')})`, p.portrait, CATEGORIES.portrait)}
+                ${renderCounterItem(p.id, 'still_life', `靜物 (×${getMultiplier('still_life')})`, p.still_life, CATEGORIES.still_life)}
+                ${renderCounterItem(p.id, 'landscape', `風景 (×${getMultiplier('landscape')})`, p.landscape, CATEGORIES.landscape)}
               </div>
             </div>
 
-            <!-- Bonuses & Accessories -->
-            <div class="space-y-3 mb-4 pt-3 border-t border-[#dfcfb0]">
+            <!-- SECTION 2: Bonuses -->
+            <div class="mb-5 bg-white/70 p-3 rounded-lg border border-[#cfbe9e] space-y-3">
+              <div class="flex justify-between items-center pb-1 border-b border-[#cfbe9e]">
+                <span class="text-xs font-bold text-[#15803d] uppercase tracking-wide">
+                  ✨ 獎勵加分項目
+                </span>
+                <span class="text-xs font-bold text-[#15803d]">
+                  獎勵小計: <strong id="sec-bonus-total-${p.id}" class="text-sm font-black text-[#15803d]">0</strong> 分
+                </span>
+              </div>
+
               <!-- Eyeline Bonus -->
-              <div class="flex items-center justify-between">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                 <div>
                   <span class="text-xs font-bold text-[#3d2716] block">👀 視線水平最熱門畫作 (+3/幅)</span>
-                  <span class="text-[11px] text-[#7a6249]">僅限目前流行榜 ×5 的畫作</span>
+                  <span class="text-[11px] text-[#7a6249]">僅限流行榜 ×5 的畫作</span>
                 </div>
-                ${renderStepper(p.id, 'eyelineCount', p.eyelineCount, 0, 10)}
+                <div class="w-full sm:w-36">
+                  ${renderStepper(p.id, 'eyelineCount', p.eyelineCount, 0, 10)}
+                </div>
               </div>
 
               <!-- Decor Score -->
-              <div class="flex items-center justify-between">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                 <div>
                   <span class="text-xs font-bold text-[#3d2716] block">🏺 牆面裝飾品總分</span>
-                  <span class="text-[11px] text-[#7a6249]">裝飾板塊盾牌標記總點數</span>
+                  <span class="text-[11px] text-[#7a6249]">盾牌標記總點數</span>
                 </div>
-                ${renderStepper(p.id, 'decorPoints', p.decorPoints, 0, 30)}
+                <div class="w-full sm:w-36">
+                  ${renderStepper(p.id, 'decorPoints', p.decorPoints, 0, 30)}
+                </div>
               </div>
 
               <!-- Full Gallery Bonus Checkbox -->
-              <div class="flex items-center justify-between bg-[#f2e6cf]/80 p-2 rounded-lg border border-[#cbbb98]">
+              <div class="flex items-center justify-between bg-[#ebdcb9] p-2 rounded border border-[#b89758]/60">
                 <div>
-                  <span class="text-xs font-bold text-[#3d2716] block">🖼️ 完美牆面 (+5 分)</span>
-                  <span class="text-[11px] text-[#7a6249]">整個客廳牆面完全擺滿無空缺</span>
+                  <span class="text-xs font-bold text-[#3d2716] block">🏆 完美牆面獎勵 (+5 分)</span>
+                  <span class="text-[11px] text-[#7a6249]">牆面所有格位皆填滿</span>
                 </div>
                 <input type="checkbox" onchange="toggleCheckbox(${p.id}, 'fullGallery')" ${p.fullGallery ? 'checked' : ''} 
-                  class="w-5 h-5 accent-[#8b261e] rounded cursor-pointer">
+                  class="w-5 h-5 accent-[#b91c1c] rounded cursor-pointer">
               </div>
             </div>
 
-            <!-- Penalties & Tie Breaker -->
-            <div class="space-y-3 pt-3 border-t border-[#dfcfb0]">
+            <!-- SECTION 3: Penalties & Tie Breaker -->
+            <div class="bg-white/70 p-3 rounded-lg border border-[#cfbe9e] space-y-3">
+              <div class="flex justify-between items-center pb-1 border-b border-[#cfbe9e]">
+                <span class="text-xs font-bold text-[#991b1b] uppercase tracking-wide">
+                  🔻 扣分與平手決勝
+                </span>
+                <span class="text-xs font-bold text-[#991b1b]">
+                  扣分小計: <strong id="sec-penalty-total-${p.id}" class="text-sm font-black text-[#991b1b]">0</strong> 分
+                </span>
+              </div>
+
               <!-- Empty Corners -->
-              <div class="flex items-center justify-between">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                 <div>
-                  <span class="text-xs font-bold text-[#8b261e] block">🔻 未覆蓋角落扣分 (-2/個)</span>
-                  <span class="text-[11px] text-[#7a6249]">四個邊角未被畫作覆蓋數量 (0-4)</span>
+                  <span class="text-xs font-bold text-[#991b1b] block">未覆蓋角落扣分 (-2/個)</span>
+                  <span class="text-[11px] text-[#7a6249]">四個角落未覆蓋數量 (0-4)</span>
                 </div>
-                ${renderStepper(p.id, 'emptyCorners', p.emptyCorners, 0, 4)}
+                <div class="w-full sm:w-36">
+                  ${renderStepper(p.id, 'emptyCorners', p.emptyCorners, 0, 4)}
+                </div>
               </div>
 
               <!-- Excess Paintings -->
-              <div class="flex items-center justify-between">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                 <div>
-                  <span class="text-xs font-bold text-[#8b261e] block">📦 溢出多餘畫作扣分 (-2/幅)</span>
-                  <span class="text-[11px] text-[#7a6249]">擺放在圖板旁無法上牆的畫作 (0-2)</span>
+                  <span class="text-xs font-bold text-[#991b1b] block">溢出多餘畫作扣分 (-2/幅)</span>
+                  <span class="text-[11px] text-[#7a6249]">未上牆的畫作 (0-2)</span>
                 </div>
-                ${renderStepper(p.id, 'excessPaintings', p.excessPaintings, 0, 2)}
+                <div class="w-full sm:w-36">
+                  ${renderStepper(p.id, 'excessPaintings', p.excessPaintings, 0, 2)}
+                </div>
               </div>
 
               <!-- Tie Breaker Hand -->
-              <div class="flex items-center justify-between pt-1">
-                <div>
-                  <span class="text-xs font-bold text-[#443528] block">🃏 剩餘出價手牌點數總和</span>
-                  <span class="text-[11px] text-[#7a6249]">平手決勝負標準 (Tie-breaker)</span>
+              <div id="tiebreaker-box-${p.id}" class="p-2.5 rounded border transition-colors bg-[#ece7dd] border-[#cfbe9e]">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-xs font-bold block text-[#5c4a3b]" id="tiebreaker-label-${p.id}">
+                      🃏 剩餘出價手牌點數
+                    </span>
+                    <span class="text-[10px] text-[#7a6249]" id="tiebreaker-hint-${p.id}">
+                      (僅於總分平手時啟用)
+                    </span>
+                  </div>
+                  <input type="number" id="tieBreakerHand-${p.id}" value="${p.tieBreakerHand}" disabled 
+                    onchange="updateFieldValue(${p.id}, 'tieBreakerHand', this.value)" 
+                    class="w-20 bg-gray-200 border border-gray-400 text-gray-500 rounded text-center text-sm font-bold py-1 outline-none transition cursor-not-allowed">
                 </div>
-                <input type="number" id="tieBreakerHand-${p.id}" value="${p.tieBreakerHand}" onchange="updateFieldValue(${p.id}, 'tieBreakerHand', this.value)" 
-                  class="w-16 bg-white border border-[#b89758] rounded text-center text-xs font-bold py-1 focus:ring-1 focus:ring-[#8b261e] outline-none">
               </div>
             </div>
           </div>
 
-          <!-- Live Card Total Footprint -->
-          <div class="mt-4 pt-3 border-t-2 border-[#b89758]/50 flex justify-between items-center bg-[#eddcb9]/50 -mx-5 -mb-5 px-5 py-3 rounded-b-xl">
-            <span class="text-xs font-bold text-[#5c4025]">當前估算小計：</span>
-            <span id="player-quick-total-${p.id}" class="text-2xl font-cinzel font-black text-[#8b261e]">0</span>
+          <!-- Bottom Card Total Footprint -->
+          <div class="mt-5 pt-3 border-t-2 border-[#b89758]/50 flex justify-between items-center bg-[#ebdcb9] -mx-5 -mb-5 px-5 py-3 rounded-b-xl">
+            <span class="text-xs font-bold text-[#5c4025]">玩家 ${p.id} 總分：</span>
+            <span id="player-quick-total-${p.id}" class="text-2xl font-cinzel font-black text-[#991b1b]">0 分</span>
           </div>
         `;
         container.appendChild(card);
       }
     }
 
-    function renderCounterItem(playerId, field, label, val, color) {
+    // Helper for category counter with full-width container & no trailing gaps
+    function renderCounterItem(playerId, field, label, val, catConfig) {
       return `
-        <div class="bg-white/80 p-2 rounded border border-[#cfbe9e] flex flex-col justify-between">
-          <div class="font-bold flex items-center gap-1 mb-1 truncate" style="color: ${color}">
-            <span class="w-2 h-2 rounded-full inline-block" style="background-color: ${color}"></span>
+        <div class="p-2 rounded border flex flex-col justify-between" 
+             style="background-color: ${catConfig.bgColor}; border-color: ${catConfig.borderColor};">
+          <div class="font-bold text-xs flex items-center gap-1.5 mb-1.5 truncate" style="color: ${catConfig.textColor};">
+            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${catConfig.color};"></span>
             <span class="truncate">${label}</span>
           </div>
-          ${renderStepper(playerId, field, val, 0, 20)}
+          <div class="w-full">
+            ${renderStepper(playerId, field, val, 0, 20)}
+          </div>
         </div>
       `;
     }
 
+    // Fixed Stepper: w-full flex, input flex-1, buttons fixed width, eliminating right-hand blank gap
     function renderStepper(playerId, field, value, min, max) {
       return `
-        <div class="flex items-center border border-[#b89758] rounded overflow-hidden bg-white shadow-inner">
-          <button onclick="stepValue(${playerId}, '${field}', -1, ${min}, ${max})" class="px-2 py-0.5 bg-[#f3e7ce] hover:bg-[#e4d3b0] text-[#3d2716] font-bold text-xs active:bg-[#d6bf96] select-none transition">−</button>
-          <input type="number" id="${field}-${playerId}" value="${value}" min="${min}" max="${max}" onchange="updateFieldValue(${playerId}, '${field}', this.value)" 
-            class="w-10 text-center font-bold text-xs bg-transparent border-x border-[#b89758]/40 py-0.5 text-[#2c1d13] focus:outline-none">
-          <button onclick="stepValue(${playerId}, '${field}', 1, ${min}, ${max})" class="px-2 py-0.5 bg-[#f3e7ce] hover:bg-[#e4d3b0] text-[#3d2716] font-bold text-xs active:bg-[#d6bf96] select-none transition">+</button>
+        <div class="w-full flex items-stretch border border-[#b89758] rounded overflow-hidden bg-white shadow-sm">
+          <button type="button" onclick="stepValue(${playerId}, '${field}', -1, ${min}, ${max})" 
+            class="w-9 h-8 bg-[#f5ecdc] hover:bg-[#ebd9b8] active:bg-[#dfc89e] text-[#3d2716] font-bold text-sm flex items-center justify-center shrink-0 border-r border-[#b89758]/40 select-none transition">
+            −
+          </button>
+          <input type="number" id="${field}-${playerId}" value="${value}" min="${min}" max="${max}" 
+            onchange="updateFieldValue(${playerId}, '${field}', this.value)" 
+            class="flex-1 min-w-0 text-center font-bold text-sm bg-white text-[#2c1d13] py-0 outline-none">
+          <button type="button" onclick="stepValue(${playerId}, '${field}', 1, ${min}, ${max})" 
+            class="w-9 h-8 bg-[#f5ecdc] hover:bg-[#ebd9b8] active:bg-[#dfc89e] text-[#3d2716] font-bold text-sm flex items-center justify-center shrink-0 border-l border-[#b89758]/40 select-none transition">
+            +
+          </button>
         </div>
       `;
     }
@@ -446,40 +524,42 @@
       const activePlayers = players.slice(0, playerCount);
       const computed = activePlayers.map(p => {
         // Painting prestige
-        const pScore = p.portrait * getMultiplier('portrait');
-        const lScore = p.landscape * getMultiplier('landscape');
-        const sScore = p.still_life * getMultiplier('still_life');
-        const cScore = p.cityscape * getMultiplier('cityscape');
-        const paintingTotal = pScore + lScore + sScore + cScore;
+        const cScore = (p.cityscape || 0) * getMultiplier('cityscape');
+        const pScore = (p.portrait || 0) * getMultiplier('portrait');
+        const sScore = (p.still_life || 0) * getMultiplier('still_life');
+        const lScore = (p.landscape || 0) * getMultiplier('landscape');
+        const paintingTotal = cScore + pScore + sScore + lScore;
 
         // Bonuses
         const eyelineBonus = (p.eyelineCount || 0) * 3;
         const decorBonus = p.decorPoints || 0;
         const galleryBonus = p.fullGallery ? 5 : 0;
+        const bonusTotal = eyelineBonus + decorBonus + galleryBonus;
 
-        // Malus
+        // Penalties
         const cornerPenalty = (p.emptyCorners || 0) * 2;
         const excessPenalty = (p.excessPaintings || 0) * 2;
-        const totalPenalty = cornerPenalty + excessPenalty;
+        const penaltyTotal = cornerPenalty + excessPenalty;
 
         // Final Score
-        const finalScore = paintingTotal + eyelineBonus + decorBonus + galleryBonus - totalPenalty;
+        const finalScore = paintingTotal + bonusTotal - penaltyTotal;
 
         return {
           ...p,
-          pScore, lScore, sScore, cScore,
+          cScore, pScore, sScore, lScore,
           paintingTotal,
           eyelineBonus,
           decorBonus,
           galleryBonus,
+          bonusTotal,
           cornerPenalty,
           excessPenalty,
-          totalPenalty,
+          penaltyTotal,
           finalScore
         };
       });
 
-      // Sort by final score desc, then by tieBreakerHand desc
+      // Sort by finalScore desc, then tieBreakerHand desc
       computed.sort((a, b) => {
         if (b.finalScore !== a.finalScore) {
           return b.finalScore - a.finalScore;
@@ -492,11 +572,46 @@
 
     function calculateAndRender() {
       const computed = computeScores();
+      const { hasTies, tiedPlayerIds } = checkHasTies();
 
-      // Update quick total badges on player cards
+      // Update Section Subtotals and quick total on cards
       computed.forEach(p => {
-        const el = document.getElementById(`player-quick-total-${p.id}`);
-        if (el) el.innerText = `${p.finalScore} 分`;
+        const pSub = document.getElementById(`sec-painting-total-${p.id}`);
+        if (pSub) pSub.innerText = p.paintingTotal;
+
+        const bSub = document.getElementById(`sec-bonus-total-${p.id}`);
+        if (bSub) bSub.innerText = p.bonusTotal;
+
+        const penSub = document.getElementById(`sec-penalty-total-${p.id}`);
+        if (penSub) penSub.innerText = p.penaltyTotal;
+
+        const totalEl = document.getElementById(`player-quick-total-${p.id}`);
+        if (totalEl) totalEl.innerText = `${p.finalScore} 分`;
+
+        // Manage Tie-Breaker Hand Input Accessibility
+        const tieInput = document.getElementById(`tieBreakerHand-${p.id}`);
+        const tieBox = document.getElementById(`tiebreaker-box-${p.id}`);
+        const tieLabel = document.getElementById(`tiebreaker-label-${p.id}`);
+        const tieHint = document.getElementById(`tiebreaker-hint-${p.id}`);
+
+        if (tieInput && tieBox) {
+          const isTied = tiedPlayerIds.includes(p.id);
+          if (isTied) {
+            tieInput.disabled = false;
+            tieInput.className = 'w-20 bg-white border-2 border-[#b91c1c] text-[#991b1b] rounded text-center text-sm font-bold py-1 outline-none ring-2 ring-[#fca5a5] cursor-text';
+            tieBox.className = 'p-2.5 rounded border-2 border-[#b91c1c] bg-[#fee2e2]';
+            tieLabel.className = 'text-xs font-bold block text-[#991b1b]';
+            tieHint.innerText = '⚠️ 出現同分！請輸入剩餘出價牌決勝';
+            tieHint.className = 'text-[10px] text-[#991b1b] font-bold';
+          } else {
+            tieInput.disabled = true;
+            tieInput.className = 'w-20 bg-gray-200 border border-gray-400 text-gray-500 rounded text-center text-sm font-bold py-1 outline-none cursor-not-allowed';
+            tieBox.className = 'p-2.5 rounded border bg-[#ece7dd] border-[#cfbe9e]';
+            tieLabel.className = 'text-xs font-bold block text-[#5c4a3b]';
+            tieHint.innerText = '(僅於總分平手時啟用)';
+            tieHint.className = 'text-[10px] text-[#7a6249]';
+          }
+        }
       });
 
       // Render Leaderboard Cards
@@ -504,84 +619,74 @@
       lbContainer.innerHTML = '';
 
       const medals = ['🥇 冠軍', '🥈 亞軍', '🥉 季軍', '殿軍'];
-      const borderGradients = [
-        'border-[#d4af37] bg-gradient-to-r from-[#fae8be]/90 to-[#fdf9f0]',
-        'border-[#a8a8a8] bg-gradient-to-r from-[#ececec]/80 to-[#fdf9f0]',
-        'border-[#c48c58] bg-gradient-to-r from-[#eed1b8]/80 to-[#fdf9f0]',
-        'border-[#b89758]/50 bg-white/60'
-      ];
+      const rankBorders = ['border-[#b89758]', 'border-gray-400', 'border-[#b45309]', 'border-[#cfbe9e]'];
+      const rankBg = ['bg-[#fff9ed]', 'bg-[#f8f8f8]', 'bg-[#fff5eb]', 'bg-white'];
 
       computed.forEach((p, idx) => {
-        // Detect tie
         const isTied = (idx > 0 && computed[idx - 1].finalScore === p.finalScore) ||
                        (idx < computed.length - 1 && computed[idx + 1].finalScore === p.finalScore);
 
         const card = document.createElement('div');
-        card.className = `p-4 rounded-xl border-2 ${borderGradients[idx] || borderGradients[3]} shadow-sm flex flex-wrap items-center justify-between gap-4 transition transform hover:-translate-y-0.5`;
+        card.className = `p-4 rounded-xl border-2 ${rankBorders[idx] || rankBorders[3]} ${rankBg[idx] || rankBg[3]} shadow-sm flex flex-wrap items-center justify-between gap-4`;
 
         card.innerHTML = `
           <div class="flex items-center gap-3">
-            <span class="text-sm md:text-base font-cinzel font-black px-2.5 py-1 rounded bg-[#332013] text-[#f4dfb8] shadow">
+            <span class="text-sm font-cinzel font-black px-3 py-1 rounded bg-[#241a15] text-[#f5d77f]">
               ${medals[idx] || `${idx + 1}th`}
             </span>
             <div>
               <div class="font-bold text-base md:text-lg text-[#2f1f14] flex items-center gap-2">
-                ${p.name}
-                ${isTied ? `<span class="text-[10px] bg-[#8b261e] text-white px-2 py-0.5 rounded-full font-sans font-normal">同分，以手牌剩餘點 (${p.tieBreakerHand}點) 決勝</span>` : ''}
+                玩家 ${p.id}
+                ${isTied ? `<span class="text-[11px] bg-[#991b1b] text-white px-2 py-0.5 rounded font-normal">同分平手，以手牌剩餘點 (${p.tieBreakerHand}點) 決勝</span>` : ''}
               </div>
               <div class="text-xs text-[#6e543b]">
-                畫作聲望: <strong>${p.paintingTotal}</strong> | 視線: <strong>+${p.eyelineBonus}</strong> | 裝飾: <strong>+${p.decorBonus}</strong> | 扣分: <strong>-${p.totalPenalty}</strong>
+                畫作: <strong>${p.paintingTotal}</strong> | 獎勵: <strong>+${p.bonusTotal}</strong> | 扣分: <strong>-${p.penaltyTotal}</strong>
               </div>
             </div>
           </div>
           <div class="text-right">
-            <div class="text-xs text-[#7c634a] font-bold uppercase tracking-wider">總聲望得分</div>
-            <div class="text-3xl md:text-4xl font-cinzel font-black text-[#8b261e]">${p.finalScore} <span class="text-sm font-sans font-bold text-[#5c4025]">分</span></div>
+            <div class="text-[10px] text-[#7c634a] font-bold uppercase tracking-wider">總聲望得分</div>
+            <div class="text-3xl font-cinzel font-black text-[#991b1b]">${p.finalScore} <span class="text-xs font-sans font-bold text-[#5c4025]">分</span></div>
           </div>
         `;
         lbContainer.appendChild(card);
       });
 
-      // Render Audit Table Body
+      // Render Detailed Audit Table
       const tableBody = document.getElementById('breakdown-table-body');
       tableBody.innerHTML = '';
       computed.forEach((p, idx) => {
         const tr = document.createElement('tr');
-        tr.className = idx % 2 === 0 ? 'bg-white/40' : 'bg-transparent';
+        tr.className = idx % 2 === 0 ? 'bg-white' : 'bg-[#faf6ee]';
         tr.innerHTML = `
           <td class="p-2.5 font-bold text-[#3d2716]">
-            ${idx + 1}. ${p.name}
+            ${idx + 1}. 玩家 ${p.id}
           </td>
           <td class="p-2.5">
-            <span class="font-semibold text-[#883025]">${p.pScore}</span> + 
-            <span class="font-semibold text-[#386641]">${p.lScore}</span> + 
-            <span class="font-semibold text-[#9d6b24]">${p.sScore}</span> + 
-            <span class="font-semibold text-[#315678]">${p.cScore}</span>
-            <span class="text-gray-500 font-bold block sm:inline">(=${p.paintingTotal})</span>
+            <span class="font-bold text-[#1d4ed8]">${p.cScore}</span> + 
+            <span class="font-bold text-[#b91c1c]">${p.pScore}</span> + 
+            <span class="font-bold text-[#b45309]">${p.sScore}</span> + 
+            <span class="font-bold text-[#15803d]">${p.lScore}</span>
+            <span class="text-gray-600 font-bold">(=${p.paintingTotal})</span>
           </td>
-          <td class="p-2.5 text-emerald-800 font-semibold">+${p.eyelineBonus}</td>
-          <td class="p-2.5 text-amber-900 font-semibold">+${p.decorBonus}</td>
-          <td class="p-2.5 ${p.galleryBonus > 0 ? 'text-emerald-800 font-bold' : 'text-gray-400'}">${p.galleryBonus > 0 ? '+5' : '0'}</td>
-          <td class="p-2.5 ${p.cornerPenalty > 0 ? 'text-rose-700 font-bold' : 'text-gray-400'}">${p.cornerPenalty > 0 ? `-${p.cornerPenalty}` : '0'}</td>
-          <td class="p-2.5 ${p.excessPenalty > 0 ? 'text-rose-700 font-bold' : 'text-gray-400'}">${p.excessPenalty > 0 ? `-${p.excessPenalty}` : '0'}</td>
+          <td class="p-2.5 text-[#15803d] font-semibold">+${p.eyelineBonus}</td>
+          <td class="p-2.5 text-[#b45309] font-semibold">+${p.decorBonus}</td>
+          <td class="p-2.5 ${p.galleryBonus > 0 ? 'text-[#15803d] font-bold' : 'text-gray-400'}">${p.galleryBonus > 0 ? '+5' : '0'}</td>
+          <td class="p-2.5 ${p.cornerPenalty > 0 ? 'text-[#991b1b] font-bold' : 'text-gray-400'}">${p.cornerPenalty > 0 ? `-${p.cornerPenalty}` : '0'}</td>
+          <td class="p-2.5 ${p.excessPenalty > 0 ? 'text-[#991b1b] font-bold' : 'text-gray-400'}">${p.excessPenalty > 0 ? `-${p.excessPenalty}` : '0'}</td>
           <td class="p-2.5 font-mono text-[#5c442c] font-semibold">${p.tieBreakerHand}</td>
-          <td class="p-2.5 text-right font-cinzel font-black text-base text-[#8b261e]">${p.finalScore}</td>
+          <td class="p-2.5 text-right font-cinzel font-black text-base text-[#991b1b]">${p.finalScore}</td>
         `;
         tableBody.appendChild(tr);
       });
     }
 
-    function renderAll() {
-      renderPlayers();
-      calculateAndRender();
-    }
-
     function resetAllScores() {
       players.forEach(p => {
-        p.portrait = 0;
-        p.landscape = 0;
-        p.still_life = 0;
         p.cityscape = 0;
+        p.portrait = 0;
+        p.still_life = 0;
+        p.landscape = 0;
         p.eyelineCount = 0;
         p.decorPoints = 0;
         p.fullGallery = false;
@@ -589,26 +694,26 @@
         p.excessPaintings = 0;
         p.tieBreakerHand = 0;
       });
-      renderAll();
+      renderPlayers();
+      calculateAndRender();
       showToast('已重設所有分數');
     }
 
     function copyResultsSummary() {
       const computed = computeScores();
       let text = `🏛️ 【Art Society 藝術協會 - 終局計分成績】🏛️\n`;
-      text += `📅 國家流行榜倍率: 肖像×${getMultiplier('portrait')} | 風景×${getMultiplier('landscape')} | 靜物×${getMultiplier('still_life')} | 城市×${getMultiplier('cityscape')}\n`;
+      text += `市場倍率: 城市(藍)×${getMultiplier('cityscape')} | 肖像(紅)×${getMultiplier('portrait')} | 靜物(黃)×${getMultiplier('still_life')} | 風景(綠)×${getMultiplier('landscape')}\n`;
       text += `------------------------------------\n`;
 
       computed.forEach((p, idx) => {
-        text += `${idx + 1}. ${p.name} : ${p.finalScore} 分\n`;
-        text += `   • 畫作分: ${p.paintingTotal} (肖${p.portrait} 風${p.landscape} 靜${p.still_life} 城${p.cityscape})\n`;
-        text += `   • 視線加分: +${p.eyelineBonus} | 裝飾品: +${p.decorBonus} | 完美牆面: ${p.galleryBonus > 0 ? '+5' : '無'}\n`;
-        text += `   • 扣分: 角落-${p.cornerPenalty} | 溢出-${p.excessPenalty}\n`;
-        text += `   • 平手出價餘牌: ${p.tieBreakerHand} 點\n`;
+        text += `${idx + 1}. 玩家 ${p.id} : ${p.finalScore} 分\n`;
+        text += `   • 畫作分: ${p.paintingTotal} (城${p.cityscape} 肖${p.portrait} 靜${p.still_life} 風${p.landscape})\n`;
+        text += `   • 獎勵: +${p.bonusTotal} (視線+${p.eyelineBonus}, 裝飾+${p.decorBonus}, 完美牆+${p.galleryBonus})\n`;
+        text += `   • 扣分: -${p.penaltyTotal} (角落-${p.cornerPenalty}, 溢出-${p.excessPenalty})\n`;
+        if (p.tieBreakerHand > 0) text += `   • 平手出價餘牌: ${p.tieBreakerHand} 點\n`;
       });
-      text += `------------------------------------\n恭喜得勝者！✨`;
+      text += `------------------------------------\n恭喜獲勝者！✨`;
 
-      // Fallback copy using textarea
       const el = document.createElement('textarea');
       el.value = text;
       document.body.appendChild(el);
@@ -616,7 +721,7 @@
       document.execCommand('copy');
       document.body.removeChild(el);
 
-      showToast('計分榜已複製到剪貼簿！可直接貼上至 WhatsApp/Signal 群組');
+      showToast('計分榜已複製到剪貼簿！');
     }
 
     function showToast(msg) {
@@ -630,8 +735,8 @@
       }, 2500);
     }
 
-    // Initialize on load
     window.onload = function() {
+      renderMarketBoard();
       setPlayerCount(4);
     };
   </script>
