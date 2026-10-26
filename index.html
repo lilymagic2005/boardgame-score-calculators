@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Society 藝術協會 - 官方計分與排名系統</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Serif TC', serif;
+      background-color: #1a1615;
+      color: #2b231d;
+    }
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+    .paper-texture {
+      background-color: #fcf9f2;
+      background-image: radial-gradient(#d6cbb8 0.75px, transparent 0.75px), radial-gradient(#d6cbb8 0.75px, #fcf9f2 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+    }
+    .ornate-border {
+      border: 2px solid #b89758;
+      box-shadow: 0 0 0 4px #2a2015, 0 10px 25px -5px rgba(0,0,0,0.5);
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #d4af37 0%, #aa8222 50%, #f3e5ab 100%);
+    }
+    .gold-text {
+      background: linear-gradient(135deg, #f5d77f, #dfb755, #fcedb9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-[#2e261f] pb-16">
+
+  <!-- Header Section -->
+  <header class="bg-[#241a15] text-[#f7e8ce] py-8 border-b-4 border-[#b89758] shadow-2xl relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+      <div class="inline-block px-4 py-1 border border-[#b89758]/60 text-xs tracking-widest uppercase mb-2 text-[#d4af37]">
+        Board Game Companion • 桌面遊戲專用計分儀
+      </div>
+      <h1 class="text-3xl md:text-5xl font-cinzel font-extrabold tracking-wider gold-text uppercase drop-shadow-md">
+        Art Society 藝術協會
+      </h1>
+      <p class="text-sm md:text-base text-[#c9b79c] mt-2 italic">
+        沙龍畫作鑑賞 • 聲望結算與排名計分表
+      </p>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 mt-8 space-y-8">
+    
+    <!-- Step 1: Global Setup & Market Fashion Board -->
+    <section class="paper-texture ornate-border rounded-xl p-5 md:p-8">
+      <div class="flex flex-wrap items-center justify-between border-b-2 border-[#b89758]/40 pb-4 mb-6 gap-4">
+        <div>
+          <span class="text-xs font-bold text-[#8c6721] uppercase tracking-wider block font-cinzel">Stage I</span>
+          <h2 class="text-xl md:text-2xl font-bold text-[#3a2013] flex items-center gap-2">
+            🏛️ 國家美術館流行榜 (聲望倍率)
+          </h2>
+        </div>
+
+        <!-- Players Count Selector -->
+        <div class="flex items-center gap-2 bg-[#ecdcb9]/60 px-4 py-2 rounded-lg border border-[#b89758]/50">
+          <label class="text-sm font-semibold text-[#4a3424]">參賽玩家人數：</label>
+          <div class="flex gap-1">
+            <button onclick="setPlayerCount(2)" id="btn-p2" class="w-8 h-8 rounded font-cinzel font-bold text-sm transition">2</button>
+            <button onclick="setPlayerCount(3)" id="btn-p3" class="w-8 h-8 rounded font-cinzel font-bold text-sm transition">3</button>
+            <button onclick="setPlayerCount(4)" id="btn-p4" class="w-8 h-8 rounded font-cinzel font-bold text-sm transition">4</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-xs text-[#6e5842] mb-4">
+        請指定遊戲結束時四大藝術流派在流行榜上的最終順位（分別為 ×5、×4、×3、×2 倍率，系統會自動校驗不重複）：
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
+        <!-- 5x Vogue -->
+        <div class="bg-gradient-to-b from-[#f3e3be] to-[#eed29d] p-3 rounded-lg border-2 border-[#b89758] shadow-sm text-center">
+          <span class="inline-block px-2 py-0.5 bg-[#8b261e] text-white text-xs font-bold rounded mb-1">最熱門 ×5</span>
+          <div class="text-xs font-semibold text-[#573919] mb-1">In Vogue</div>
+          <select id="market-5" onchange="handleMarketChange(5)" class="w-full bg-[#fdfaf3] border border-[#a27f3b] text-sm rounded p-1.5 font-bold text-[#3d2716] text-center focus:ring-2 focus:ring-[#b89758] outline-none">
+            <option value="portrait" selected>肖像 (Portrait)</option>
+            <option value="landscape">風景 (Landscape)</option>
+            <option value="still_life">靜物 (Still Life)</option>
+            <option value="cityscape">城市歷史 (City)</option>
+          </select>
+        </div>
+
+        <!-- 4x Popular -->
+        <div class="bg-gradient-to-b from-[#f8ecd5] to-[#eddcb7] p-3 rounded-lg border border-[#b89758] shadow-sm text-center">
+          <span class="inline-block px-2 py-0.5 bg-[#ad6824] text-white text-xs font-bold rounded mb-1">受歡迎 ×4</span>
+          <div class="text-xs font-semibold text-[#573919] mb-1">Popular</div>
+          <select id="market-4" onchange="handleMarketChange(4)" class="w-full bg-[#fdfaf3] border border-[#a27f3b] text-sm rounded p-1.5 font-bold text-[#3d2716] text-center focus:ring-2 focus:ring-[#b89758] outline-none">
+            <option value="portrait">肖像 (Portrait)</option>
+            <option value="landscape" selected>風景 (Landscape)</option>
+            <option value="still_life">靜物 (Still Life)</option>
+            <option value="cityscape">城市歷史 (City)</option>
+          </select>
+        </div>
+
+        <!-- 3x Admired -->
+        <div class="bg-gradient-to-b from-[#fbf4e6] to-[#f4e7cd] p-3 rounded-lg border border-[#b89758]/80 shadow-sm text-center">
+          <span class="inline-block px-2 py-0.5 bg-[#526f43] text-white text-xs font-bold rounded mb-1">讚賞 ×3</span>
+          <div class="text-xs font-semibold text-[#573919] mb-1">Admired</div>
+          <select id="market-3" onchange="handleMarketChange(3)" class="w-full bg-[#fdfaf3] border border-[#a27f3b] text-sm rounded p-1.5 font-bold text-[#3d2716] text-center focus:ring-2 focus:ring-[#b89758] outline-none">
+            <option value="portrait">肖像 (Portrait)</option>
+            <option value="landscape">風景 (Landscape)</option>
+            <option value="still_life" selected>靜物 (Still Life)</option>
+            <option value="cityscape">城市歷史 (City)</option>
+          </select>
+        </div>
+
+        <!-- 2x Recognized -->
+        <div class="bg-gradient-to-b from-[#fdfbf6] to-[#f8f0dd] p-3 rounded-lg border border-[#b89758]/60 shadow-sm text-center">
+          <span class="inline-block px-2 py-0.5 bg-[#4f5c6b] text-white text-xs font-bold rounded mb-1">公認 ×2</span>
+          <div class="text-xs font-semibold text-[#573919] mb-1">Recognized</div>
+          <select id="market-2" onchange="handleMarketChange(2)" class="w-full bg-[#fdfaf3] border border-[#a27f3b] text-sm rounded p-1.5 font-bold text-[#3d2716] text-center focus:ring-2 focus:ring-[#b89758] outline-none">
+            <option value="portrait">肖像 (Portrait)</option>
+            <option value="landscape">風景 (Landscape)</option>
+            <option value="still_life">靜物 (Still Life)</option>
+            <option value="cityscape" selected>城市歷史 (City)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Player Scoring Input Cards -->
+    <section>
+      <div class="flex items-center justify-between mb-4 px-1">
+        <h2 class="text-xl md:text-2xl font-cinzel font-bold text-[#eddcb7] flex items-center gap-2">
+          <span>🎨</span> 玩家畫廊佈置與結算數據
+        </h2>
+        <span class="text-xs text-[#b89758] italic">* 填妥後下方即時計算排行榜</span>
+      </div>
+
+      <div id="players-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Step 3: Leaderboard & Detailed Breakdown -->
+    <section class="paper-texture ornate-border rounded-xl p-5 md:p-8">
+      <div class="flex flex-wrap items-center justify-between border-b-2 border-[#b89758]/40 pb-4 mb-6 gap-3">
+        <div>
+          <span class="text-xs font-bold text-[#8c6721] uppercase tracking-wider block font-cinzel">Final Results</span>
+          <h2 class="text-2xl font-bold text-[#3a2013] flex items-center gap-2">
+            🏆 沙龍最終聲望排名榜
+          </h2>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="copyResultsSummary()" class="px-3 py-1.5 bg-[#3a2618] hover:bg-[#523722] text-[#f7e8ce] text-xs font-bold rounded border border-[#b89758] transition flex items-center gap-1">
+            📋 複製計分結果
+          </button>
+          <button onclick="resetAllScores()" class="px-3 py-1.5 bg-[#8b261e] hover:bg-[#6e1a14] text-white text-xs font-bold rounded transition">
+            🔄 重設所有分數
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Leaderboard Cards -->
+      <div id="leaderboard-cards" class="space-y-4 mb-8">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Detailed Breakdown Table -->
+      <div class="overflow-x-auto">
+        <h3 class="text-sm font-bold text-[#553b24] mb-3 uppercase tracking-wider font-cinzel flex items-center gap-1">
+          <span>📜</span> 全項目詳細加扣分明細表 (Audit Breakdown)
+        </h3>
+        <table class="w-full text-left border-collapse text-xs md:text-sm">
+          <thead>
+            <tr class="bg-[#e8d7b7] text-[#3d2716] border-b-2 border-[#b89758]">
+              <th class="p-2.5 font-bold">排名 / 玩家</th>
+              <th class="p-2.5">畫作聲望分 (4類)</th>
+              <th class="p-2.5">視線水平 (+3/幅)</th>
+              <th class="p-2.5">裝飾物得分</th>
+              <th class="p-2.5">完美牆面 (+5)</th>
+              <th class="p-2.5">角落未覆蓋 (-2/個)</th>
+              <th class="p-2.5">多餘畫作 (-2/幅)</th>
+              <th class="p-2.5">決勝點數</th>
+              <th class="p-2.5 font-bold text-right text-sm">最終總分</th>
+            </tr>
+          </thead>
+          <tbody id="breakdown-table-body" class="divide-y divide-[#dfcfb0]">
+            <!-- Table rows rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Rules Quick Cheatsheet -->
+      <div class="mt-8 p-4 bg-[#f0e3cc]/70 border border-[#b89758]/60 rounded-lg text-xs text-[#5c442c] space-y-1.5">
+        <div class="font-bold text-[#3d2716] text-sm mb-1">📖 官方計分重要提醒：</div>
+        <div>• <strong>失禮畫作（Faux Pas）</strong>：相鄰畫框裝飾相同而違規的畫作不計入有效數量，輸入前請先扣除。</div>
+        <div>• <strong>視線獎勵（Eyeline）</strong>：只有目前市場流行榜 <strong>最熱門（×5）</strong> 的畫作，且只要有任一部份處於牆面視線水平帶（Eyeline strip）內，每幅額外 +3 分。</div>
+        <div>• <strong>平手判定（Tie-breaker）</strong>：若總分相同，以剩餘在手中的<strong>競標出價牌點數總和</strong>較高者勝出。</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-[#2c1d13] text-[#f7e8ce] border-2 border-[#b89758] px-4 py-2.5 rounded-lg shadow-2xl text-xs md:text-sm font-semibold opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+    已成功複製計分結果！
+  </div>
+
+  <script>
+    // State
+    let playerCount = 4;
+    const paintingTypes = [
+      { id: 'portrait', name: '肖像', color: '#883025' },
+      { id: 'landscape', name: '風景', color: '#386641' },
+      { id: 'still_life', name: '靜物', color: '#9d6b24' },
+      { id: 'cityscape', name: '城市歷史', color: '#315678' }
+    ];
+
+    let marketRank = {
+      5: 'portrait',
+      4: 'landscape',
+      3: 'still_life',
+      2: 'cityscape'
+    };
+
+    let players = [
+      { id: 1, name: '玩家 1 (愛德華)', portrait: 3, landscape: 2, still_life: 2, cityscape: 1, eyelineCount: 2, decorPoints: 4, fullGallery: false, emptyCorners: 1, excessPaintings: 0, tieBreakerHand: 12 },
+      { id: 2, name: '玩家 2 (維多利亞)', portrait: 2, landscape: 3, still_life: 1, cityscape: 2, eyelineCount: 1, decorPoints: 6, fullGallery: true, emptyCorners: 0, excessPaintings: 1, tieBreakerHand: 8 },
+      { id: 3, name: '玩家 3 (亞瑟)', portrait: 1, landscape: 2, still_life: 4, cityscape: 1, eyelineCount: 0, decorPoints: 3, fullGallery: false, emptyCorners: 2, excessPaintings: 0, tieBreakerHand: 15 },
+      { id: 4, name: '玩家 4 (貝翠絲)', portrait: 2, landscape: 1, still_life: 2, cityscape: 3, eyelineCount: 1, decorPoints: 5, fullGallery: false, emptyCorners: 0, excessPaintings: 0, tieBreakerHand: 9 }
+    ];
+
+    // Helper to get multiplier of a painting type
+    function getMultiplier(typeId) {
+      for (const [mult, id] of Object.entries(marketRank)) {
+        if (id === typeId) return parseInt(mult);
+      }
+      return 2;
+    }
+
+    // Market change handler with duplicate resolution
+    function handleMarketChange(changedMult) {
+      const selectedValue = document.getElementById(`market-${changedMult}`).value;
+      const oldMult = getMultiplier(selectedValue);
+      
+      if (oldMult !== changedMult) {
+        const displacedValue = marketRank[changedMult];
+        marketRank[oldMult] = displacedValue;
+        document.getElementById(`market-${oldMult}`).value = displacedValue;
+      }
+      marketRank[changedMult] = selectedValue;
+      renderAll();
+    }
+
+    function setPlayerCount(count) {
+      playerCount = count;
+      [2, 3, 4].forEach(n => {
+        const btn = document.getElementById(`btn-p${n}`);
+        if (n === count) {
+          btn.className = 'w-8 h-8 rounded font-cinzel font-bold text-sm bg-[#3d2716] text-[#e8d7b7] shadow-inner';
+        } else {
+          btn.className = 'w-8 h-8 rounded font-cinzel font-bold text-sm bg-white/70 hover:bg-white text-[#5c442c]';
+        }
+      });
+      renderPlayers();
+      calculateAndRender();
+    }
+
+    // Number adjustment stepper
+    function stepValue(playerId, field, delta, min = 0, max = 99) {
+      const p = players.find(x => x.id === playerId);
+      if (!p) return;
+      const current = p[field] || 0;
+      const next = Math.max(min, Math.min(max, current + delta));
+      p[field] = next;
+      const inputEl = document.getElementById(`${field}-${playerId}`);
+      if (inputEl) inputEl.value = next;
+      calculateAndRender();
+    }
+
+    function updateFieldValue(playerId, field, value) {
+      const p = players.find(x => x.id === playerId);
+      if (!p) return;
+      p[field] = parseInt(value) || 0;
+      calculateAndRender();
+    }
+
+    function toggleCheckbox(playerId, field) {
+      const p = players.find(x => x.id === playerId);
+      if (!p) return;
+      p[field] = !p[field];
+      calculateAndRender();
+    }
+
+    function updatePlayerName(playerId, name) {
+      const p = players.find(x => x.id === playerId);
+      if (p) {
+        p.name = name.trim() || `玩家 ${playerId}`;
+        calculateAndRender();
+      }
+    }
+
+    function renderPlayers() {
+      const container = document.getElementById('players-container');
+      container.innerHTML = '';
+
+      for (let i = 0; i < playerCount; i++) {
+        const p = players[i];
+        const card = document.createElement('div');
+        card.className = 'paper-texture ornate-border rounded-xl p-5 shadow-lg relative flex flex-col justify-between';
+        
+        card.innerHTML = `
+          <div>
+            <!-- Header: Player Name -->
+            <div class="flex items-center justify-between border-b border-[#b89758]/50 pb-3 mb-4">
+              <input type="text" value="${p.name}" onchange="updatePlayerName(${p.id}, this.value)" 
+                class="bg-transparent font-bold text-lg md:text-xl text-[#342013] border-b border-transparent hover:border-[#b89758] focus:border-[#8b261e] focus:bg-white/60 px-1 py-0.5 rounded outline-none transition w-3/4">
+              <span class="text-xs font-cinzel font-bold px-2 py-0.5 rounded bg-[#ebd7b2] text-[#553b24] border border-[#b89758]/40">P${p.id}</span>
+            </div>
+
+            <!-- Paintings counts -->
+            <div class="mb-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-bold text-[#6d4e2a] uppercase tracking-wide">有效畫作數量 (已扣除失禮失誤)</span>
+                <span class="text-[11px] text-[#8c6721] italic">依市場即時倍率計分</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                ${renderCounterItem(p.id, 'portrait', `肖像 (×${getMultiplier('portrait')})`, p.portrait, '#883025')}
+                ${renderCounterItem(p.id, 'landscape', `風景 (×${getMultiplier('landscape')})`, p.landscape, '#386641')}
+                ${renderCounterItem(p.id, 'still_life', `靜物 (×${getMultiplier('still_life')})`, p.still_life, '#9d6b24')}
+                ${renderCounterItem(p.id, 'cityscape', `城市歷史 (×${getMultiplier('cityscape')})`, p.cityscape, '#315678')}
+              </div>
+            </div>
+
+            <!-- Bonuses & Accessories -->
+            <div class="space-y-3 mb-4 pt-3 border-t border-[#dfcfb0]">
+              <!-- Eyeline Bonus -->
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-xs font-bold text-[#3d2716] block">👀 視線水平最熱門畫作 (+3/幅)</span>
+                  <span class="text-[11px] text-[#7a6249]">僅限目前流行榜 ×5 的畫作</span>
+                </div>
+                ${renderStepper(p.id, 'eyelineCount', p.eyelineCount, 0, 10)}
+              </div>
+
+              <!-- Decor Score -->
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-xs font-bold text-[#3d2716] block">🏺 牆面裝飾品總分</span>
+                  <span class="text-[11px] text-[#7a6249]">裝飾板塊盾牌標記總點數</span>
+                </div>
+                ${renderStepper(p.id, 'decorPoints', p.decorPoints, 0, 30)}
+              </div>
+
+              <!-- Full Gallery Bonus Checkbox -->
+              <div class="flex items-center justify-between bg-[#f2e6cf]/80 p-2 rounded-lg border border-[#cbbb98]">
+                <div>
+                  <span class="text-xs font-bold text-[#3d2716] block">🖼️ 完美牆面 (+5 分)</span>
+                  <span class="text-[11px] text-[#7a6249]">整個客廳牆面完全擺滿無空缺</span>
+                </div>
+                <input type="checkbox" onchange="toggleCheckbox(${p.id}, 'fullGallery')" ${p.fullGallery ? 'checked' : ''} 
+                  class="w-5 h-5 accent-[#8b261e] rounded cursor-pointer">
+              </div>
+            </div>
+
+            <!-- Penalties & Tie Breaker -->
+            <div class="space-y-3 pt-3 border-t border-[#dfcfb0]">
+              <!-- Empty Corners -->
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-xs font-bold text-[#8b261e] block">🔻 未覆蓋角落扣分 (-2/個)</span>
+                  <span class="text-[11px] text-[#7a6249]">四個邊角未被畫作覆蓋數量 (0-4)</span>
+                </div>
+                ${renderStepper(p.id, 'emptyCorners', p.emptyCorners, 0, 4)}
+              </div>
+
+              <!-- Excess Paintings -->
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-xs font-bold text-[#8b261e] block">📦 溢出多餘畫作扣分 (-2/幅)</span>
+                  <span class="text-[11px] text-[#7a6249]">擺放在圖板旁無法上牆的畫作 (0-2)</span>
+                </div>
+                ${renderStepper(p.id, 'excessPaintings', p.excessPaintings, 0, 2)}
+              </div>
+
+              <!-- Tie Breaker Hand -->
+              <div class="flex items-center justify-between pt-1">
+                <div>
+                  <span class="text-xs font-bold text-[#443528] block">🃏 剩餘出價手牌點數總和</span>
+                  <span class="text-[11px] text-[#7a6249]">平手決勝負標準 (Tie-breaker)</span>
+                </div>
+                <input type="number" id="tieBreakerHand-${p.id}" value="${p.tieBreakerHand}" onchange="updateFieldValue(${p.id}, 'tieBreakerHand', this.value)" 
+                  class="w-16 bg-white border border-[#b89758] rounded text-center text-xs font-bold py-1 focus:ring-1 focus:ring-[#8b261e] outline-none">
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Card Total Footprint -->
+          <div class="mt-4 pt-3 border-t-2 border-[#b89758]/50 flex justify-between items-center bg-[#eddcb9]/50 -mx-5 -mb-5 px-5 py-3 rounded-b-xl">
+            <span class="text-xs font-bold text-[#5c4025]">當前估算小計：</span>
+            <span id="player-quick-total-${p.id}" class="text-2xl font-cinzel font-black text-[#8b261e]">0</span>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+    }
+
+    function renderCounterItem(playerId, field, label, val, color) {
+      return `
+        <div class="bg-white/80 p-2 rounded border border-[#cfbe9e] flex flex-col justify-between">
+          <div class="font-bold flex items-center gap-1 mb-1 truncate" style="color: ${color}">
+            <span class="w-2 h-2 rounded-full inline-block" style="background-color: ${color}"></span>
+            <span class="truncate">${label}</span>
+          </div>
+          ${renderStepper(playerId, field, val, 0, 20)}
+        </div>
+      `;
+    }
+
+    function renderStepper(playerId, field, value, min, max) {
+      return `
+        <div class="flex items-center border border-[#b89758] rounded overflow-hidden bg-white shadow-inner">
+          <button onclick="stepValue(${playerId}, '${field}', -1, ${min}, ${max})" class="px-2 py-0.5 bg-[#f3e7ce] hover:bg-[#e4d3b0] text-[#3d2716] font-bold text-xs active:bg-[#d6bf96] select-none transition">−</button>
+          <input type="number" id="${field}-${playerId}" value="${value}" min="${min}" max="${max}" onchange="updateFieldValue(${playerId}, '${field}', this.value)" 
+            class="w-10 text-center font-bold text-xs bg-transparent border-x border-[#b89758]/40 py-0.5 text-[#2c1d13] focus:outline-none">
+          <button onclick="stepValue(${playerId}, '${field}', 1, ${min}, ${max})" class="px-2 py-0.5 bg-[#f3e7ce] hover:bg-[#e4d3b0] text-[#3d2716] font-bold text-xs active:bg-[#d6bf96] select-none transition">+</button>
+        </div>
+      `;
+    }
+
+    function computeScores() {
+      const activePlayers = players.slice(0, playerCount);
+      const computed = activePlayers.map(p => {
+        // Painting prestige
+        const pScore = p.portrait * getMultiplier('portrait');
+        const lScore = p.landscape * getMultiplier('landscape');
+        const sScore = p.still_life * getMultiplier('still_life');
+        const cScore = p.cityscape * getMultiplier('cityscape');
+        const paintingTotal = pScore + lScore + sScore + cScore;
+
+        // Bonuses
+        const eyelineBonus = (p.eyelineCount || 0) * 3;
+        const decorBonus = p.decorPoints || 0;
+        const galleryBonus = p.fullGallery ? 5 : 0;
+
+        // Malus
+        const cornerPenalty = (p.emptyCorners || 0) * 2;
+        const excessPenalty = (p.excessPaintings || 0) * 2;
+        const totalPenalty = cornerPenalty + excessPenalty;
+
+        // Final Score
+        const finalScore = paintingTotal + eyelineBonus + decorBonus + galleryBonus - totalPenalty;
+
+        return {
+          ...p,
+          pScore, lScore, sScore, cScore,
+          paintingTotal,
+          eyelineBonus,
+          decorBonus,
+          galleryBonus,
+          cornerPenalty,
+          excessPenalty,
+          totalPenalty,
+          finalScore
+        };
+      });
+
+      // Sort by final score desc, then by tieBreakerHand desc
+      computed.sort((a, b) => {
+        if (b.finalScore !== a.finalScore) {
+          return b.finalScore - a.finalScore;
+        }
+        return (b.tieBreakerHand || 0) - (a.tieBreakerHand || 0);
+      });
+
+      return computed;
+    }
+
+    function calculateAndRender() {
+      const computed = computeScores();
+
+      // Update quick total badges on player cards
+      computed.forEach(p => {
+        const el = document.getElementById(`player-quick-total-${p.id}`);
+        if (el) el.innerText = `${p.finalScore} 分`;
+      });
+
+      // Render Leaderboard Cards
+      const lbContainer = document.getElementById('leaderboard-cards');
+      lbContainer.innerHTML = '';
+
+      const medals = ['🥇 冠軍', '🥈 亞軍', '🥉 季軍', '殿軍'];
+      const borderGradients = [
+        'border-[#d4af37] bg-gradient-to-r from-[#fae8be]/90 to-[#fdf9f0]',
+        'border-[#a8a8a8] bg-gradient-to-r from-[#ececec]/80 to-[#fdf9f0]',
+        'border-[#c48c58] bg-gradient-to-r from-[#eed1b8]/80 to-[#fdf9f0]',
+        'border-[#b89758]/50 bg-white/60'
+      ];
+
+      computed.forEach((p, idx) => {
+        // Detect tie
+        const isTied = (idx > 0 && computed[idx - 1].finalScore === p.finalScore) ||
+                       (idx < computed.length - 1 && computed[idx + 1].finalScore === p.finalScore);
+
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-xl border-2 ${borderGradients[idx] || borderGradients[3]} shadow-sm flex flex-wrap items-center justify-between gap-4 transition transform hover:-translate-y-0.5`;
+
+        card.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="text-sm md:text-base font-cinzel font-black px-2.5 py-1 rounded bg-[#332013] text-[#f4dfb8] shadow">
+              ${medals[idx] || `${idx + 1}th`}
+            </span>
+            <div>
+              <div class="font-bold text-base md:text-lg text-[#2f1f14] flex items-center gap-2">
+                ${p.name}
+                ${isTied ? `<span class="text-[10px] bg-[#8b261e] text-white px-2 py-0.5 rounded-full font-sans font-normal">同分，以手牌剩餘點 (${p.tieBreakerHand}點) 決勝</span>` : ''}
+              </div>
+              <div class="text-xs text-[#6e543b]">
+                畫作聲望: <strong>${p.paintingTotal}</strong> | 視線: <strong>+${p.eyelineBonus}</strong> | 裝飾: <strong>+${p.decorBonus}</strong> | 扣分: <strong>-${p.totalPenalty}</strong>
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs text-[#7c634a] font-bold uppercase tracking-wider">總聲望得分</div>
+            <div class="text-3xl md:text-4xl font-cinzel font-black text-[#8b261e]">${p.finalScore} <span class="text-sm font-sans font-bold text-[#5c4025]">分</span></div>
+          </div>
+        `;
+        lbContainer.appendChild(card);
+      });
+
+      // Render Audit Table Body
+      const tableBody = document.getElementById('breakdown-table-body');
+      tableBody.innerHTML = '';
+      computed.forEach((p, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = idx % 2 === 0 ? 'bg-white/40' : 'bg-transparent';
+        tr.innerHTML = `
+          <td class="p-2.5 font-bold text-[#3d2716]">
+            ${idx + 1}. ${p.name}
+          </td>
+          <td class="p-2.5">
+            <span class="font-semibold text-[#883025]">${p.pScore}</span> + 
+            <span class="font-semibold text-[#386641]">${p.lScore}</span> + 
+            <span class="font-semibold text-[#9d6b24]">${p.sScore}</span> + 
+            <span class="font-semibold text-[#315678]">${p.cScore}</span>
+            <span class="text-gray-500 font-bold block sm:inline">(=${p.paintingTotal})</span>
+          </td>
+          <td class="p-2.5 text-emerald-800 font-semibold">+${p.eyelineBonus}</td>
+          <td class="p-2.5 text-amber-900 font-semibold">+${p.decorBonus}</td>
+          <td class="p-2.5 ${p.galleryBonus > 0 ? 'text-emerald-800 font-bold' : 'text-gray-400'}">${p.galleryBonus > 0 ? '+5' : '0'}</td>
+          <td class="p-2.5 ${p.cornerPenalty > 0 ? 'text-rose-700 font-bold' : 'text-gray-400'}">${p.cornerPenalty > 0 ? `-${p.cornerPenalty}` : '0'}</td>
+          <td class="p-2.5 ${p.excessPenalty > 0 ? 'text-rose-700 font-bold' : 'text-gray-400'}">${p.excessPenalty > 0 ? `-${p.excessPenalty}` : '0'}</td>
+          <td class="p-2.5 font-mono text-[#5c442c] font-semibold">${p.tieBreakerHand}</td>
+          <td class="p-2.5 text-right font-cinzel font-black text-base text-[#8b261e]">${p.finalScore}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function renderAll() {
+      renderPlayers();
+      calculateAndRender();
+    }
+
+    function resetAllScores() {
+      players.forEach(p => {
+        p.portrait = 0;
+        p.landscape = 0;
+        p.still_life = 0;
+        p.cityscape = 0;
+        p.eyelineCount = 0;
+        p.decorPoints = 0;
+        p.fullGallery = false;
+        p.emptyCorners = 0;
+        p.excessPaintings = 0;
+        p.tieBreakerHand = 0;
+      });
+      renderAll();
+      showToast('已重設所有分數');
+    }
+
+    function copyResultsSummary() {
+      const computed = computeScores();
+      let text = `🏛️ 【Art Society 藝術協會 - 終局計分成績】🏛️\n`;
+      text += `📅 國家流行榜倍率: 肖像×${getMultiplier('portrait')} | 風景×${getMultiplier('landscape')} | 靜物×${getMultiplier('still_life')} | 城市×${getMultiplier('cityscape')}\n`;
+      text += `------------------------------------\n`;
+
+      computed.forEach((p, idx) => {
+        text += `${idx + 1}. ${p.name} : ${p.finalScore} 分\n`;
+        text += `   • 畫作分: ${p.paintingTotal} (肖${p.portrait} 風${p.landscape} 靜${p.still_life} 城${p.cityscape})\n`;
+        text += `   • 視線加分: +${p.eyelineBonus} | 裝飾品: +${p.decorBonus} | 完美牆面: ${p.galleryBonus > 0 ? '+5' : '無'}\n`;
+        text += `   • 扣分: 角落-${p.cornerPenalty} | 溢出-${p.excessPenalty}\n`;
+        text += `   • 平手出價餘牌: ${p.tieBreakerHand} 點\n`;
+      });
+      text += `------------------------------------\n恭喜得勝者！✨`;
+
+      // Fallback copy using textarea
+      const el = document.createElement('textarea');
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      showToast('計分榜已複製到剪貼簿！可直接貼上至 WhatsApp/Signal 群組');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2500);
+    }
+
+    // Initialize on load
+    window.onload = function() {
+      setPlayerCount(4);
+    };
+  </script>
+</body>
+</html>
